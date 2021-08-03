@@ -39,39 +39,39 @@
         //var result = document.getElementById("last_name");
         const Http = new XMLHttpRequest();
         function getLocation() {
-        console.log("Get Location");
-        var bdcApi = "https://api.bigdatacloud.net/data/reverse-geocode-client"
+            console.log("Get Location");
+            var bdcApi = "https://us1.locationiq.com/v1/reverse.php"
 
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                bdcApi = bdcApi
-                    + "?latitude=" + position.coords.latitude
-                    + "&longitude=" + position.coords.longitude
-                    + "&localityLanguage=en";
-                getApi(bdcApi);
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    bdcApi = bdcApi
+                        + "?key=pk.0facf05f8c8e1df89eb4c560332c949e&lat=" + position.coords.latitude
+                        + "&lon=" + position.coords.longitude
+                        + "&format=json";
+                    getApi(bdcApi);
 
-            },
-            (err) => { getApi(bdcApi); },
-            {
-                enableHighAccuracy: true,
-                timeout: 5000,
-                maximumAge: 0
-            });
+                },
+                (err) => { getApi(bdcApi); },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                });
         }
         function getApi(bdcApi) {
-        Http.open("GET", bdcApi);
-        Http.send();
-        Http.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var tab = JSON.parse(this.responseText);
-                //console.log(tab);
-                var city=tab.city;
-                console.log(city);
-                var result=document.getElementById("last_name");  
-                result.value = city;                
-                //console.log(result);
-            }
-        };
+            Http.open("GET", bdcApi);
+            Http.send();
+            Http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var tab = JSON.parse(this.responseText);
+                    //console.log(tab);
+                    var city=tab.address.city;
+                    console.log(city);
+                    var result=document.getElementById("last_name");  
+                    result.value = city;                
+                    //console.log(result);
+                }
+            };
         }
     </script>
 
